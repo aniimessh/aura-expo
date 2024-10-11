@@ -16,7 +16,8 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dev.aura"
     },
     "web": {
       "bundler": "metro",
