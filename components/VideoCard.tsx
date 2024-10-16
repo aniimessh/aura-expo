@@ -15,7 +15,7 @@ any) => {
   const [play, setPlay] = useState(false);
 
   return (
-    <View className="flex-col items-center px-4 mb-14">
+    <View className="flex-col items-center mb-14 px-4  ">
       <View className="flex-row gap-3 items-start">
         <View className="justify-center items-center flex-1 flex-row">
           <View className="w-[46px] h-[46px] rounded-lg border border-secondary justify-center items-center p-0.5">
