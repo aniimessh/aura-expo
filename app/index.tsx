@@ -10,9 +10,16 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../constants";
 import CustommButton from "@/components/CustommButton";
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 export default function App() {
+  const { isLoading, isLoggedIn } = useGlobalContext();
+
+  if (!isLoading && isLoggedIn) {
+    return <Redirect href={"/(tabs)/home"} />;
+  }
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView
@@ -50,7 +57,7 @@ export default function App() {
           </Text>
           <CustommButton
             title="Continue with Email"
-            handlePress={() => router.push("/sign-in")}
+            handlePress={() => router.push("/(auth)/sign-in")}
             containerStyles="w-full mt-7"
           />
         </View>

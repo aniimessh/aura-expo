@@ -1,10 +1,10 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, ToastAndroid } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import FormField from "@/components/FormField";
 import CustommButton from "@/components/CustommButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
@@ -13,10 +13,22 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const submit = () => {
-    console.log("button pressed");
-    createUser();
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const submit = async () => {
+    if (!form.email || !form.password || !form.username) {
+      ToastAndroid.show("Please fill in all the fields", ToastAndroid.SHORT);
+    }
+
+    setIsSubmitting(true);
+    try {
+      const result = await createUser(form.email, form.password, form.username);
+      router.replace("/(tabs)/home");
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    } catch (error: any) {
+      ToastAndroid.show(error?.message, ToastAndroid.SHORT);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -63,7 +75,7 @@ const SignUp = () => {
               Have an account already ?
             </Text>
             <Link
-              href="/sign-in"
+              href="/(auth)/sign-in"
               className="text-lg font-psemibold text-secondary"
             >
               Sign In
