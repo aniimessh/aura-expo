@@ -17,7 +17,10 @@ import useAppwrite from "@/lib/useAppwrite";
 import VideoCard from "@/components/VideoCard";
 
 const Home = () => {
-  const { data: post, refetch } = useAppwrite(getAllPost);
+  const {
+    data: post,
+    refetch,
+  }: { data: { $id: string }[]; refetch: () => void } = useAppwrite(getAllPost);
   const { data: latestPost } = useAppwrite(getLatestPost);
 
   const [refreshing, setRefreshing] = useState(false);
