@@ -5,9 +5,11 @@ import { images } from "../../constants";
 import FormField from "@/components/FormField";
 import CustommButton from "@/components/CustommButton";
 import { Link, router } from "expo-router";
-import { Signin } from "@/lib/appwrite";
+import { getCurrentUser, Signin } from "@/lib/appwrite";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const SignIn = () => {
+  const { setUser, setIsLoggedIn } = useGlobalContext();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -21,6 +23,11 @@ const SignIn = () => {
     setIsSubmitting(true);
     try {
       await Signin(form.email, form.password);
+
+      const result = await getCurrentUser();
+      setUser(result);
+      setIsLoggedIn(true);
+
       router.replace("/(tabs)/home");
       // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     } catch (error: any) {

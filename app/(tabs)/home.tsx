@@ -8,8 +8,10 @@ import EmptyState from "@/components/EmptyState";
 import { getAllPost, getLatestPost } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import VideoCard from "@/components/VideoCard";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const Home = () => {
+  const { user, setIsLoggedIn, setUser } = useGlobalContext();
   const {
     data: post,
     refetch,
@@ -39,7 +41,7 @@ const Home = () => {
                     Welcome Back
                   </Text>
                   <Text className="text-2xl font-psemibold text-white">
-                    Animesh Gupta
+                    {user?.username}
                   </Text>
                 </View>
                 <View className="mt-1.5">
